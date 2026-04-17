@@ -1,0 +1,9 @@
+include: "rules/common.smk"
+include: "rules/acquire_anat.smk"
+include: "rules/acquire_func.smk"
+include: "rules/mot_correct.smk"
+
+rule all:
+    input:
+        expand(rules.acquire_anat.output.nii, sub_num=SUB_NUMS),
+        expand(rules.mot_correct.output.img, sub_num=SUB_NUMS, task=TASKS),
