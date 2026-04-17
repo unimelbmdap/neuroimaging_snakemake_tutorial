@@ -12,5 +12,9 @@ dependencies = [
     "sphinx-copybutton>=0.5.2",
 ]
 
+[build-system]
+requires = ["uv_build>=0.10.8,<0.11.0"]
+build-backend = "uv_build"
+
 [tool.uv.sources]
-pygments-snakemake = { path = "../pygments-snakemake", editable = true }
+pygments-snakemake = { git = "https://github.com/djmannion/pygments-snakemake" }
