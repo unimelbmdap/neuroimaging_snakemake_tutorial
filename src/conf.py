@@ -29,6 +29,7 @@ copybutton_exclude = ".linenos, .gp"
 
 templates_path = ["_templates"]
 exclude_patterns = []
+source_suffix = [".md"]
 
 maximum_signature_line_length = 88
 

@@ -1,3 +1,4 @@
 workflow/.snakemake
 workflow/results
 workflow/logs
+gh-pages

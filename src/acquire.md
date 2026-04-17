@@ -39,7 +39,7 @@ As you can see, each of the required output files can be created by plugging in 
 
 We can now start to create the rule, called `acquire_anat`, that specifies a single output that we refer to as `nii` and that contains the `sub_num` wildcard:
 
-```{literalinclude} workflow/workflow/rules/acquire_anat.smk
+```{literalinclude} ../workflow/workflow/rules/acquire_anat.smk
 :caption: `workflow/workflow/rules/acquire_anat.smk`
 :language: snakemake
 :lines: 1-4
@@ -60,7 +60,7 @@ In particular, we just need to combine the study data location (the S3 URL `s3:/
 Because we need the output path *after* the `sub_num` wildcard has been replaced with a specific value, we specify this parameter as a function.
 Here, we use an anonymous (lambda) function and use the provided `output` argument:
 
-```{literalinclude} workflow/workflow/rules/acquire_anat.smk
+```{literalinclude} ../workflow/workflow/rules/acquire_anat.smk
 :caption: `workflow/workflow/rules/acquire_anat.smk`
 :language: snakemake
 :lines: 1-8
@@ -81,7 +81,7 @@ If we search the internet for an AWS CLI container, we can see that one is hoste
 From that site, we can see its location identifier is something like `amazon/aws-cli:2.32.21` (the latest version number will vary over time).
 We can provide this information in the rule, along with the `docker://` protocol prefix, to specify that the rule should execute its job within this container:
 
-```{literalinclude} workflow/workflow/rules/acquire_anat.smk
+```{literalinclude} ../workflow/workflow/rules/acquire_anat.smk
 :caption: `workflow/workflow/rules/acquire_anat.smk`
 :language: snakemake
 :lines: 1-10
@@ -94,7 +94,7 @@ Because multiple jobs can be running simultaneously, and potentially on differen
 Instead, we can redirect any such output to a log file.
 Here, we specify the location of this log file:
 
-```{literalinclude} workflow/workflow/rules/acquire_anat.smk
+```{literalinclude} ../workflow/workflow/rules/acquire_anat.smk
 :caption: `workflow/workflow/rules/acquire_anat.smk`
 :language: snakemake
 :lines: 1-12
@@ -109,7 +109,7 @@ Note that this doesn't actually *do* any logging or any redirection of terminal 
 Now we need to specify the AWS CLI command that will download the data.
 We use the `shell` directive in the rule to specify the command to execute, using wildcards for the remote URL and the output path (and the log path):
 
-```{literalinclude} workflow/workflow/rules/acquire_anat.smk
+```{literalinclude} ../workflow/workflow/rules/acquire_anat.smk
 :caption: `workflow/workflow/rules/acquire_anat.smk`
 :language: snakemake
 :emphasize-lines: 13-
@@ -141,7 +141,7 @@ However, this puts the same information in multiple places and becomes prone to 
 Instead, we can use [rule inheritance](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#snakefiles-rule-inheritance) to ask Snakemake to use everything from the `acquire_anat` rule except for what we explicitly override.
 We do this via:
 
-```{literalinclude} workflow/workflow/rules/acquire_func.smk
+```{literalinclude} ../workflow/workflow/rules/acquire_func.smk
 :caption: `workflow/workflow/rules/acquire_func.smk`
 :language: snakemake
 :lines: 1
@@ -163,7 +163,7 @@ results/sub-10189/func/sub-10189_task-taskswitch_bold.nii.gz
 We can see that, in addition to the `sub_num` wildcard that was required for the anatomical rule, there is also a `task` wildcard.
 We can thus specify the rule output as:
 
-```{literalinclude} workflow/workflow/rules/acquire_func.smk
+```{literalinclude} ../workflow/workflow/rules/acquire_func.smk
 :caption: `workflow/workflow/rules/acquire_func.smk`
 :language: snakemake
 :lines: 1-3
@@ -176,7 +176,7 @@ We can thus specify the rule output as:
 
 We need to override the path for the log file:
 
-```{literalinclude} workflow/workflow/rules/acquire_func.smk
+```{literalinclude} ../workflow/workflow/rules/acquire_func.smk
 :caption: `workflow/workflow/rules/acquire_func.smk`
 :language: snakemake
 :emphasize-lines: 4-
@@ -190,7 +190,7 @@ Now, we need to tell Snakemake *which* output files we want the workflow to prod
 
 First, we need to include our newly-created rules within the `Snakefile`:
 
-```{literalinclude} workflow/workflow/Snakefile_acquire
+```{literalinclude} ../workflow/workflow/Snakefile_acquire
 :caption: `workflow/workflow/Snakefile`
 :language: snakemake
 :lines: 1-3
@@ -205,7 +205,7 @@ At this point, we want the output to be the anatomical images for each of the su
 We can use the [`expand` helper function](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#the-expand-function) to insert these values into the rule output paths:
 
 
-```{literalinclude} workflow/workflow/Snakefile_acquire
+```{literalinclude} ../workflow/workflow/Snakefile_acquire
 :caption: `workflow/workflow/Snakefile`
 :language: snakemake
 :emphasize-lines: 5-

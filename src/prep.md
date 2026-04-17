@@ -10,14 +10,14 @@ We will create a Snakemake rule that only contains some study information; this 
 For our purposes, we specify the subject numbers and task descriptors that we are interested in processing.
 We do so using regular Python syntax:
 
-```{literalinclude} workflow/workflow/rules/common.smk
+```{literalinclude} ../workflow/workflow/rules/common.smk
 :caption: `workflow/rules/common.smk`
 :language: snakemake
 ```
 
 We then make this information available to Snakemake by using the `include` directive in the main Snakemake file (`Snakefile`):
 
-```{literalinclude} workflow/workflow/Snakefile
+```{literalinclude} ../workflow/workflow/Snakefile
 :caption: `workflow/Snakefile`
 :language: snakemake
 ```

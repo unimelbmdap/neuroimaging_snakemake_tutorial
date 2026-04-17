@@ -106,7 +106,7 @@ mkdir --parents workflow/profiles/default
 
 Then, specify the configuration in YAML format in the `config.yaml` file:
 
-```{literalinclude} workflow/profiles/default/config.yaml
+```{literalinclude} ../workflow/profiles/default/config.yaml
 :caption: `workflow/profiles/default/config.yaml`
 :language: yaml
 ```
