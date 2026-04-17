@@ -57,3 +57,4 @@ html_last_updated_fmt = ""
 
 def setup(app):
     app.add_css_file("theme_hide.css")
+    app.add_css_file("code_boxes.css")

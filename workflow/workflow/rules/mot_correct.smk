@@ -2,12 +2,18 @@ rule mot_correct:
     "Runs motion correction"
     input:
         img=rules.acquire_func.output.nii,
+        base=lambda wildcards: expand(
+            rules.acquire_func.output.nii,
+            sub_num=wildcards.sub_num,
+            task="stopsignal",
+        )[0],
     output:
         img="results/sub-{sub_num}/func/sub-{sub_num}_task-{task}_mc.nii.gz",
     params:
-        base="results/sub-{sub_num}/func/sub-{sub_num}_task-stopsignal_bold.nii.gz[0]",
+        base=lambda wildcards, input: input.base + "[0]",
     resources:
         mem="1GB"
+    shadow: "copy-minimal"
     container:
         "docker://ghcr.io/neurodesk/afni_25.2.03:20250717"
     log:

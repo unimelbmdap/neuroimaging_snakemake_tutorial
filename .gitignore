@@ -3,3 +3,5 @@ workflow/results
 workflow/logs
 gh-pages
 output
+*.swp
+*.log
