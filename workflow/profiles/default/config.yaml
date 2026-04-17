@@ -1,0 +1,3 @@
+software-deployment-method: apptainer
+printshellcmds: true
+cores: all
