@@ -1,9 +1,6 @@
-import os
 import subprocess
 
 from snakemake.script import snakemake
-
-os.environ["AFNI_DONT_LOGFILE"] = "YES"
 
 # open the log file for writing
 with open(snakemake.log[0], "w") as log_handle:
