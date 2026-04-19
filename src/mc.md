@@ -9,7 +9,7 @@ We want to produce a motion-corrected NIFTI file, with a similar filename struct
 We start by creating a new rule (`workflow/rules/mot_correct.smk`) that has this `output` information:
 
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
-:caption: `workflow/workflow/rules/mot_correct.smk`
+:caption: `workflow/rules/mot_correct.smk`
 :language: snakemake
 :lines: 1-2, 9-10
 ```
@@ -25,7 +25,7 @@ A good heuristic is to aim to only ever specify the full file path (containing w
 :::
 
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
-:caption: `workflow/workflow/rules/mot_correct.smk`
+:caption: `workflow/rules/mot_correct.smk`
 :language: snakemake
 :lines: 1-4, 9-10
 :emphasize-lines: 3-4
@@ -36,7 +36,7 @@ Here, we will designate the first volume in the "stopsignal" task acquisition as
 We can tell Snakemake that this is a required input by adding another entry within the `input` directive:
 
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
-:caption: `workflow/workflow/rules/mot_correct.smk`
+:caption: `workflow/rules/mot_correct.smk`
 :language: snakemake
 :lines: 1-10
 :emphasize-lines: 5-8
@@ -52,7 +52,7 @@ In the previous section, we mentioned that the base for the motion correction al
 We can specify this volume information as a parameter:
 
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
-:caption: `workflow/workflow/rules/mot_correct.smk`
+:caption: `workflow/rules/mot_correct.smk`
 :language: snakemake
 :lines: 1-12
 :emphasize-lines: 11-12
@@ -66,35 +66,105 @@ Now we need to think about the rule's mechanism --- how the output files are pro
 
 ### Container
 
+We will be using [AFNI](https://afni.nimh.nih.gov/) to perform the motion correction, so we need to find a container that provides AFNI.
+A great resource for neuroimaging-related containers is the [NeuroDesk package respository](https://github.com/orgs/neurodesk/packages).
+If we go to that site and search for 'AFNI', there is an `afni_26.0.07` package that we can use.
+Clicking on the link shows that a Docker container is available at `ghcr.io/neurodesk/afni_26.0.07:20260128`.
+That gives us all the information we need to specify the container for the rule:
+
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
-:caption: `workflow/workflow/rules/mot_correct.smk`
+:caption: `workflow/rules/mot_correct.smk`
 :language: snakemake
-:lines: 1-8, 11-12
-:emphasize-lines: 9-10
+:lines: 1-14
+:emphasize-lines: 13-14
 ```
+
+:::{note}
+The AFNI container is quite large (~8 GB) and so can take quite a while to download.
+It is cached though, so it only needs to be downloaded once.
+:::
 
 ### Logging
 
+As usual, we need to specify the file to store logging information:
+
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
-:caption: `workflow/workflow/rules/mot_correct.smk`
+:caption: `workflow/rules/mot_correct.smk`
 :language: snakemake
-:lines: 1-8, 11-14
-:emphasize-lines: 11-12
+:lines: 1-16
+:emphasize-lines: 15-16
 ```
 
 ### Script
 
+In the previous rule, we directly specified a shell command.
+Although this command is not all that complex, we will instead use a Python script to execute the rule.
+This is implemented using the `script` directive, which has a value that is the path to the Python file relative to the location of the rule.
+By convention, scripts are stored in `workflow/scripts/`; given that this rule is in `workflow/rules/`, the relative path begins with `../scripts/`.
+
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
-:caption: `workflow/workflow/rules/mot_correct.smk`
+:caption: `workflow/rules/mot_correct.smk`
 :language: snakemake
-:lines: 1-8, 11-
-:emphasize-lines: 13-14
+:lines: 1-16, 19-20
+:emphasize-lines: 17-18
 ```
 
+Before looking at the Python script, it is worth thinking about the command that the script will need to execute.
+For motion correction, we will use the `3dvolreg` command with `base` and `prefix` named parameters and the input as positional arguments.
+
+We can start the script by importing a special Snakemake object that is inserted by Snakemake at runtime and contains useful information for constructing the command:
+
+```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
+:caption: `workflow/scripts/mot_correct.py`
+:language: python
+:lines: 3
+:emphasize-lines: 
+```
+
+The `snakemake` object has a `log` attribute, which contains the information from the `log` directive in the rule.
+We start by opening this log file to be able to write to it during execution:
+
+```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
+:caption: `workflow/scripts/mot_correct.py`
+:language: python
+:lines: 3-6
+:emphasize-lines: 3-4
+```
+
+Now we can build the command, using the `snakemake` object to obtain the necessary information for the command arguments:
+
+:::{note}
+In AFNI, the volume within a file is referenced using square brackets after the path.
+:::
+
+```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
+:caption: `workflow/scripts/mot_correct.py`
+:language: python
+:lines: 3-13
+:emphasize-lines: 6-
+```
+
+It is helpful for record-keeping and debugging to store the command that was executed.
+We can do that by printing the command to the log file:
+
+```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
+:caption: `workflow/scripts/mot_correct.py`
+:language: python
+:lines: 3-16
+:emphasize-lines: 13-
+```
+
+Finally, we execute the command using the `run` function from the built-in Python `subprocess` package --- providing the log file handle so that any content from standard output or standard error is stored within the log file:
+
+```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
+:caption: `workflow/scripts/mot_correct.py`
+:language: python
+:emphasize-lines: 1, 18-
+```
 ## Resources
 
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
-:caption: `workflow/workflow/rules/mot_correct.smk`
+:caption: `workflow/rules/mot_correct.smk`
 :language: snakemake
 :emphasize-lines: 9-10
 ```
@@ -102,7 +172,7 @@ Now we need to think about the rule's mechanism --- how the output files are pro
 ## Preparing for execution
 
 ```{literalinclude} ../workflow/workflow/Snakefile_mc
-:caption: `workflow/workflow/Snakefile`
+:caption: `workflow/Snakefile`
 :language: snakemake
 :emphasize-lines: 4, 9
 ```
