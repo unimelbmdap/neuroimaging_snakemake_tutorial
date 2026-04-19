@@ -3,7 +3,7 @@
 First, create a directory that will contain the Snakemake rules:
 
 ```{code-block} console
-mkdir --parents workflow/rules/
+$ mkdir --parents workflow/rules/
 ```
 
 We will create a Snakemake rule that only contains some study information; this information is not directly used, but will be then available for other rules.
@@ -25,12 +25,13 @@ We then make this information available to Snakemake by using the `include` dire
 We can then run Snakemake, just to check that everything is OK:
 
 ```{code-block} console
-uv run snakemake
+$ uv run snakemake
 ```
 
 The output should then be something like:
 
 ```{code-block} none
+:class: console-output
 Using workflow specific profile profiles/default for setting default command line arguments.
 Assuming unrestricted shared filesystem usage.
 host: ...

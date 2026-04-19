@@ -23,6 +23,7 @@ The first step is to think about the outputs that the rule will produce.
 Given our list of subject numbers, we expect that the workflow will generate the following output files:
 
 ```{code-block} none
+:class: console-output
 results/sub-10159/anat/sub-10159_T1w.nii.gz
 results/sub-10171/anat/sub-10171_T1w.nii.gz
 results/sub-10189/anat/sub-10189_T1w.nii.gz
@@ -32,6 +33,7 @@ When creating the rule, we want to abstract away aspects of the output that are 
 We do that by replacing those characters with a *wildcard* for `sub_num`:
 
 ```{code-block} none
+:class: console-output
 results/sub-{sub_num}/anat/sub-{sub_num}_T1w.nii.gz
 ```
 
@@ -152,6 +154,7 @@ We do this via:
 As with the anatomical acquisition rule, we can start by thinking about all the output that will be produced by the rule.
 
 ```{code-block} none
+:class: console-output
 results/sub-10159/func/sub-10159_task-stopsignal_bold.nii.gz
 results/sub-10159/func/sub-10159_task-taskswitch_bold.nii.gz
 results/sub-10171/func/sub-10171_task-stopsignal_bold.nii.gz
@@ -220,13 +223,14 @@ This shows us what Snakemake is planning to do, but does not actually execute th
 We can do a dry run via:
 
 ```console
-uv run snakemake --dry-run
+$ uv run snakemake --dry-run
 ```
 
 This will produce a bunch of output.
 If we start at the top, it will look something like:
 
-```none
+```{code-block} none
+:class: console-output
 Using workflow specific profile profiles/default for setting default command line arguments.
 host: djmhomepc
 Building DAG of jobs...
@@ -245,7 +249,8 @@ It also shows that it needs to run the `acquire_anat` rule 3 times and the `acqu
 
 We can also look at the details for specific jobs, such as an anatomical data acquisition:
 
-```none
+```{code-block} none
+:class: console-output
 rule acquire_anat:
     output: results/sub-10159/anat/sub-10159_T1w.nii.gz
     jobid: 1
@@ -261,7 +266,8 @@ It also shows the wildcard value that it will use, and the shell command that is
 
 The description for a functional acquisition job is similar:
 
-```none
+```{code-block} none
+:class: console-output
 rule acquire_func:
     output: results/sub-10171/func/sub-10171_task-stopsignal_bold.nii.gz
     jobid: 7
@@ -275,7 +281,7 @@ aws s3 cp --no-sign-request --only-show-errors s3://openneuro.org/ds000030/sub-1
 If all looks good, we can go ahead and actually run the workflow:
 
 ```console
-uv run snakemake
+$ uv run snakemake
 ```
 
 Snakemake will print its progress to the screen.

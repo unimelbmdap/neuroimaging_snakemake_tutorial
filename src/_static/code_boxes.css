@@ -1,3 +1,13 @@
 pre {
   border: solid 1px;
 }
+
+.console-output pre {
+  border: dashed 1px;
+}
+
+.code-block-caption {
+  border-radius: 1.25rem;
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+}

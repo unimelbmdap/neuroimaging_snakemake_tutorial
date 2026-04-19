@@ -16,6 +16,7 @@ $ apptainer --version
 Here, we are using this version of Apptainer:
 
 ```{code-block} none
+:class: console-output
 apptainer version 1.4.5
 ```
 
@@ -26,12 +27,13 @@ The uv software allows for management of the Python project, and can be installe
 To check that uv has been installed, you can ask uv to print its version information:
 
 ```{code-block} console
-uv --version
+$ uv --version
 ```
 
 Here, we are using this version of uv:
 
 ```{code-block} none
+:class: console-output
 uv 0.11.7 (x86_64-unknown-linux-gnu)
 ```
 
@@ -42,7 +44,7 @@ It is best if this directory is empty at this point.
 
 You can check what directory you are currently in by running:
 ```{code-block} console
-echo $PWD
+$ echo $PWD
 ```
 
 First, we initialise the Python project.
@@ -101,7 +103,7 @@ At this point, the contents of the project directory should be:
 First, make the directory that will contain the command-line argument configuration file: 
 
 ```{code-block} console
-mkdir --parents workflow/profiles/default
+$ mkdir --parents workflow/profiles/default
 ```
 
 Then, specify the configuration in YAML format in the `config.yaml` file:

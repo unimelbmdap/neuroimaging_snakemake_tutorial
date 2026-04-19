@@ -7,7 +7,7 @@ with open(snakemake.log[0], "w") as log_handle:
 
     cmd = [
         "3dvolreg",
-        "-base", snakemake.params.base,
+        "-base", f"{snakemake.input.base}[{snakemake.params.base_volume}]",
         "-prefix", snakemake.output.img,
         snakemake.input.img,
     ]
