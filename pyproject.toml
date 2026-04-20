@@ -13,4 +13,4 @@ dependencies = [
 ]
 
 [tool.uv.sources]
-pygments-snakemake = { git = "https://github.com/djmannion/pygments-snakemake" }
+pygments-snakemake = { path = "../pygments-snakemake", editable = true }

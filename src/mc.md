@@ -45,7 +45,6 @@ We can tell Snakemake that this is a required input by adding another entry with
 Note that this needs to be an *input function*, because we want to use the active subject number wildcard value with a fixed `task` wildcard value.
 We use the standard Python string formatting function (`format`) to insert the desired values into the `sub_num` and `task` wildcards from the `img` entry in the `output` directive of the `acquire_func` rule.
 
-
 ## Parameters
 
 In the previous section, we mentioned that the base for the motion correction algorithm was the first volume in the image file (which contains many volumes).
@@ -161,7 +160,11 @@ Finally, we execute the command using the `run` function from the built-in Pytho
 :language: python
 :emphasize-lines: 1, 18-
 ```
+
 ## Resources
+
+We can provide an indication of the RAM that will be used by a single invocation of the rule by setting the `mem` key as part of the `resources` directive.
+Here, we will specify that Snakemake should budget for the job using up to 1 GB of RAM.
 
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
 :caption: `workflow/rules/mot_correct.smk`
@@ -171,10 +174,65 @@ Finally, we execute the command using the `run` function from the built-in Pytho
 
 ## Preparing for execution
 
+As usual, our next step is to add the new rule file to the `Snakefile`:
+
+```{literalinclude} ../workflow/workflow/Snakefile_mc_start
+:caption: `workflow/Snakefile`
+:language: snakemake
+:lines: 1-4, 8-
+:emphasize-lines: 4
+```
+
+Then we need to tell Snakemake that we want to create the *output* from the motion correction rule, via the `all` rule.
+Note that we no longer need to specify the output from the `acquire_func` rule in `all`, because the output from `acquire_func` is needed as an input for `mot_correct`.
+
 ```{literalinclude} ../workflow/workflow/Snakefile_mc
 :caption: `workflow/Snakefile`
 :language: snakemake
-:emphasize-lines: 4, 9
+:lines: 1-4, 8-
+:emphasize-lines: 9
+```
+
+If you do a test invocation of Snakemake, you will find that Snakemake gives an error:
+
+```{code-block} console
+$ uv run snakemake --dry-run
+```
+
+```{code-block} none
+:class: console-output
+AmbiguousRuleException:
+Rules mot_correct and acquire_func are ambiguous for the file results/sub-10159/func/sub-10159_task-taskswitch_desc-mc_bold.nii.gz.
+Consider starting rule output with a unique prefix, constrain your wildcards, or use the ruleorder directive.
+Wildcards:
+        mot_correct: sub_num=10159,task=taskswitch
+        acquire_func: sub_num=10159,task=taskswitch_desc-mc
+Expected input files:
+        mot_correct: results/sub-10159/func/sub-10159_task-taskswitch_bold.nii.gz results/sub-10159/func/sub-10159_task-stopsignal_bold.nii.gz
+        acquire_func:
+Expected output files:
+        mot_correct: results/sub-10159/func/sub-10159_task-taskswitch_desc-mc_bold.nii.gz
+        acquire_func: results/sub-10159/func/sub-10159_task-taskswitch_desc-mc_bold.nii.gz
+```
+
+The error is caused by Snakemake getting confused about how to resolve the wildcard values.
+From the `mot_correct` rule, it correctly infers the wildcards (`task=taskswitch`).
+However, the `task` wildcard is inferred incorrectly in the `acquire_func` rule (`task=taskswitch_desc-mc`).
+
+The solution is to provide a constraint on the potential wildcard values, using the [`wildcard_constraints`](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#wildcards) directive; i.e., we tell Snakemake that the `task` wildcard can only possibly resolve to `taskswitch` or `stopsignal`.
+Given the `task` wildcard applies over multiple rules, we specify this constraint within the `Snakefile`:
+
+
+```{literalinclude} ../workflow/workflow/Snakefile_mc
+:caption: `workflow/Snakefile`
+:language: snakemake
+:emphasize-lines: 6-7
+```
+
+If you now run Snakemake again, it should correctly resolve the wildcards:
+
+```console
+uv run snakemake --dry-run
 ```
 
 ## Executing the workflow
