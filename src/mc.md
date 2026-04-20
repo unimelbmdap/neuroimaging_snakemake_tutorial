@@ -222,7 +222,6 @@ However, the `task` wildcard is inferred incorrectly in the `acquire_func` rule 
 The solution is to provide a constraint on the potential wildcard values, using the [`wildcard_constraints`](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#wildcards) directive; i.e., we tell Snakemake that the `task` wildcard can only possibly resolve to `taskswitch` or `stopsignal`.
 Given the `task` wildcard applies over multiple rules, we specify this constraint within the `Snakefile`:
 
-
 ```{literalinclude} ../workflow/workflow/Snakefile_mc
 :caption: `workflow/Snakefile`
 :language: snakemake
@@ -232,23 +231,30 @@ Given the `task` wildcard applies over multiple rules, we specify this constrain
 If you now run Snakemake again, it should correctly resolve the wildcards:
 
 ```console
-uv run snakemake --dry-run
+$ uv run snakemake --dry-run
 ```
 
 ## Executing the workflow
 
-```console
-uv run snakemake --dry-run
-```
-
-
-If all looks good, we can go ahead and actually run the workflow:
+Finally, you can run Snakemake and execute the workflow:
 
 ```console
-uv run snakemake
+$ uv run snakemake
 ```
 
-Note that it creates a `.afni.log` file.
-No good.
+Note that it will not need to re-run the `acquire_anat` and `acquire_func` rules --- it knows that the output from those rules is already present, so it only needs to run the `mot_correct` rule to produce all the inputs to the `all` rule.
 
-Add shadow.
+:::{note}
+Snakemake can sometimes fail at this point due to being unable to download the AFNI container.
+Downloading from the package repository can become throttled and time out.
+
+An alternative approach is to manually acquire the container:
+
+```{code-block} console
+$ mkdir containers
+$ apptainer pull containers/afni.sif docker://ghcr.io/neurodesk/afni_26.0.07:20260128
+```
+
+This downloads the container into the path `containers/afni.sif`.
+This path can then be referenced in the rule instead of the URL (i.e., `container: "containers/afni.sif"`).
+:::
