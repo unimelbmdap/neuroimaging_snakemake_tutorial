@@ -117,7 +117,6 @@ We can start the script by importing a special Snakemake object that is inserted
 :caption: `workflow/scripts/mot_correct.py`
 :language: python
 :lines: 3
-:emphasize-lines: 
 ```
 
 The `snakemake` object has a `log` attribute, which contains the information from the `log` directive in the rule.
@@ -169,7 +168,7 @@ Here, we will specify that Snakemake should budget for the job using up to 1 GB 
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
 :caption: `workflow/rules/mot_correct.smk`
 :language: snakemake
-:emphasize-lines: 9-10
+:emphasize-lines: 17-18
 ```
 
 ## Preparing for execution

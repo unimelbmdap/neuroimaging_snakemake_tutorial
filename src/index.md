@@ -10,6 +10,7 @@ setup.md
 prep.md
 acquire.md
 mc.md
+tmean.md
 ```
 
 <!--

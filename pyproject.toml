@@ -10,6 +10,7 @@ dependencies = [
     "sphinx-autobuild>=2025.8.25",
     "sphinx-code-include>=2.0.0",
     "sphinx-copybutton>=0.5.2",
+    "sphinxcontrib-mermaid>=2.0.1",
 ]
 
 [tool.uv.sources]
