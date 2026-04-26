@@ -7,7 +7,14 @@ release = version
 extensions = [
     "myst_parser",
     "sphinx_copybutton",
+    "sphinxext.opengraph",
 ]
+
+# update this when live
+ogp_site_url = "https://docs.example.org/"
+ogp_social_cards = {
+    "enable": False
+}
 
 # myst_nb
 nb_execution_timeout = -1
