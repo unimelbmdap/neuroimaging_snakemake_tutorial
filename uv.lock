@@ -357,7 +357,7 @@ dependencies = [
 requires-dist = [
     { name = "furo", specifier = ">=2025.12.19" },
     { name = "myst-parser", specifier = ">=5.0.0" },
-    { name = "pygments-snakemake", editable = "../pygments-snakemake" },
+    { name = "pygments-snakemake", git = "https://github.com/djmannion/pygments-snakemake" },
     { name = "sphinx", specifier = ">=9.0.4" },
     { name = "sphinx-autobuild", specifier = ">=2025.8.25" },
     { name = "sphinx-code-include", specifier = ">=2.0.0" },
@@ -386,34 +386,9 @@ wheels = [
 [[package]]
 name = "pygments-snakemake"
 version = "0.1.0"
-source = { editable = "../pygments-snakemake" }
+source = { git = "https://github.com/djmannion/pygments-snakemake#12775d656f1a64b929d6c71308315abe9a5805d4" }
 dependencies = [
     { name = "pygments" },
-]
-
-[package.metadata]
-requires-dist = [{ name = "pygments", specifier = ">=2.19.2" }]
-
-[package.metadata.requires-dev]
-dev = [
-    { name = "black" },
-    { name = "mypy" },
-    { name = "pytest" },
-    { name = "pytest-cov" },
-    { name = "ruff" },
-    { name = "sp-repo-review", extras = ["cli"] },
-]
-docs = [
-    { name = "furo" },
-    { name = "myst-parser" },
-    { name = "sphinx" },
-    { name = "sphinx-autobuild" },
-]
-interactive = [
-    { name = "ipython" },
-    { name = "ipywidgets" },
-    { name = "jupyterlab" },
-    { name = "matplotlib" },
 ]
 
 [[package]]
