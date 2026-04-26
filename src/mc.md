@@ -2,7 +2,6 @@
 
 The first step in processing the raw data is to perform motion correction.
 
-
 ## Outputs
 
 We want to produce a motion-corrected NIFTI file, with a similar filename structure to the raw data but with the additional BIDS entity `desc` that has the label `mc`.
@@ -69,7 +68,15 @@ We will be using [AFNI](https://afni.nimh.nih.gov/) to perform the motion correc
 A great resource for neuroimaging-related containers is the [NeuroDesk package respository](https://github.com/orgs/neurodesk/packages).
 If we go to that site and search for 'AFNI', there is an `afni_26.0.07` package that we can use.
 Clicking on the link shows that a Docker container is available at `ghcr.io/neurodesk/afni_26.0.07:20260128`.
-That gives us all the information we need to specify the container for the rule:
+That gives us all the information we need to specify the container for the rule, which we add to `common.smk`:
+
+```{literalinclude} ../workflow/workflow/rules/common.smk
+:caption: `workflow/rules/common.smk`
+:language: snakemake
+:emphasize-lines: 6
+```
+
+and then to the `mot_correct.smk` rule:
 
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
 :caption: `workflow/rules/mot_correct.smk`
@@ -255,5 +262,5 @@ $ apptainer pull containers/afni.sif docker://ghcr.io/neurodesk/afni_26.0.07:202
 ```
 
 This downloads the container into the path `containers/afni.sif`.
-This path can then be referenced in the rule instead of the URL (i.e., `container: "containers/afni.sif"`).
+This path can then be referenced in the `common.smk` rule instead of the URL (i.e., the value of the `AFNI` key in the `CONTAINER_SOURCES` dictionary becomes `"containers/afni.sif"`).
 :::

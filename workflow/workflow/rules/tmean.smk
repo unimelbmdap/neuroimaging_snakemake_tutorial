@@ -8,10 +8,14 @@ rule tmean:
         )
     output:
         img="results/sub-{sub_num}/func/sub-{sub_num}_desc-tmean_bold.nii.gz",
-    container: "docker://ghcr.io/neurodesk/afni_26.0.07:20260128"
-    log: "logs/tmean/tmean_{sub_num}.txt"
-    resources: mem="1GB"
-    shadow: "shallow"
+    container:
+        CONTAINER_SOURCES["AFNI"]
+    log:
+        "logs/tmean/tmean_{sub_num}.txt"
+    resources:
+        mem="1GB",
+    shadow:
+        "shallow"
     shell:
         """
         # concatenate the input images over time into one output image

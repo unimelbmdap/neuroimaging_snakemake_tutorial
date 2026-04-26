@@ -7,9 +7,9 @@ rule acquire_anat:
             f"s3://openneuro.org/ds000030/{output.img.removeprefix("results/")}"
         ),
     container:
-        "docker://amazon/aws-cli:2.32.21"
+        CONTAINER_SOURCES["AWS-CLI"]
     log:
-        "logs/acquire_anat/acquire_anat_{sub_num}.txt",
+        "logs/acquire_anat/acquire_anat_{sub_num}.txt"
     shell:
         """
 aws \

@@ -81,7 +81,18 @@ However, a more reproducible approach is to use a container that, well, contains
 
 If we search the internet for an AWS CLI container, we can see that one is hosted by Amazon on the [Docker Hub](https://hub.docker.com/r/amazon/aws-cli/).
 From that site, we can see its location identifier is something like `amazon/aws-cli:2.32.21` (the latest version number will vary over time).
-We can provide this information in the rule, along with the `docker://` protocol prefix, to specify that the rule should execute its job within this container:
+We can provide this information in the rule, along with the `docker://` protocol prefix, to specify that the rule should execute its job within this container.
+
+Because we might want to use the same container sources in multiple rules, we can define it within the `common.smk` rule:
+
+```{literalinclude} ../workflow/workflow/rules/common.smk
+:caption: `workflow/workflow/rules/common.smk`
+:language: snakemake
+:lines: 1-5, 7
+:emphasize-lines: 4-
+```
+
+and then refer to that definition within the `acquire_anat.smk` rule:
 
 ```{literalinclude} ../workflow/workflow/rules/acquire_anat.smk
 :caption: `workflow/workflow/rules/acquire_anat.smk`
@@ -118,14 +129,22 @@ We use the `shell` directive in the rule to specify the command to execute, usin
 ```
 
 The details on the construction of this command is out of the scope of this tutorial.
-However, it is worth noting that interactive exploration of a containerised command is aided by having a local copy of the container --- obtained using the `apptainer pull` command.
-For example, `apptainer pull "docker://amazon/aws-cli:2.32.21"` will download the container into a local file named `aws-cli_2.32.21.sif`.
-An interactive console running inside the container can then be obtained by `apptainer shell aws-cli_2.32.21.sif`.
-You could then run something like `aws s3 cp help` to see the command-line options.
+However, it is worth expanding on two notable aspects of the command that are general principles to be aware of:
 
-A potentially cryptic aspect of the command is the final `> {log} 2>&1` statement.
+* The final `> {log} 2>&1` statement is a potentially cryptic aspect of the command.
 That can be read as "redirect (`>`) to the file (`{log}`), both standard error (`2`) and (`>&`) standard output (`1`)".
 It is just some arcane syntax that puts any printed output from the command into the log file rather than to the screen.
+* The `--no-progress` argument is a common pattern in shell commands to be run within Snakemake.
+Without it, the command would print to the screen, and update over time, a progress bar.
+This is useful when used interactively, but less so in the context of Snakemake where multiple commands may be run simultaneously and on remote computing infrastructure.
+
+:::{note}
+Interactive exploration of a containerised command is aided by having a local copy of the container --- obtained using the `apptainer pull` command in an interactive shell.
+For example, `apptainer pull "docker://amazon/aws-cli:2.32.21"` will download the container into a local file named `aws-cli_2.32.21.sif`.
+An interactive console running inside the container can then be obtained by `apptainer shell aws-cli_2.32.21.sif`.
+You could then run something like `aws s3 cp help` (inside the container) to see the command-line options.
+:::
+
 
 ### Resources
 

@@ -13,6 +13,7 @@ We do so using regular Python syntax:
 ```{literalinclude} ../workflow/workflow/rules/common.smk
 :caption: `workflow/rules/common.smk`
 :language: snakemake
+:lines: 1-2
 ```
 
 We then make this information available to Snakemake by using the `include` directive in the main Snakemake file (`Snakefile`):
