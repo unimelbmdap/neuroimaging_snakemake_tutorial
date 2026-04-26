@@ -46,14 +46,6 @@ html_theme_options = {
 
 html_title = project
 html_last_updated_fmt = ""
-#html_search = False
-#html_sidebars = {
-#    "**": [
-#        "sidebar/scroll-start.html",
-#        "sidebar/navigation.html",
-#        "sidebar/scroll-end.html",
-#    ],
-#}
 
 def setup(app):
     app.add_css_file("theme_hide.css")
