@@ -5,7 +5,7 @@ rule tmean:
             rules.mot_correct.output.img,
             sub_num=wildcards.sub_num,
             task=TASKS,
-        )
+        ),
     output:
         img="results/sub-{sub_num}/func/sub-{sub_num}_desc-tmean_bold.nii.gz",
     container:

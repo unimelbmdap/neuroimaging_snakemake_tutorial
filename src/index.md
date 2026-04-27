@@ -11,6 +11,7 @@ prep.md
 acquire.md
 mc.md
 tmean.md
+coreg.md
 ```
 
 <!--

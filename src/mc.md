@@ -1,4 +1,4 @@
-# Run motion correction
+# Motion correction
 
 The first step in processing the raw data is to perform motion correction.
 
@@ -87,6 +87,7 @@ and then to the `mot_correct.smk` rule:
 
 :::{note}
 The AFNI container is quite large (~8 GB) and so can take quite a while to download.
+Unfortunately, there is no progress indicator while it is downloading.
 It is cached though, so it only needs to be downloaded once.
 :::
 

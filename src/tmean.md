@@ -1,4 +1,4 @@
-# Run temporal averaging
+# Temporal averaging
 
 The next step is to average together, over time, all the motion-corrected functional images.
 
@@ -49,10 +49,6 @@ We will use the same AFNI container that we used in the motion correction rule:
 :emphasize-lines: 11-12
 ```
 
-:::{note}
-Given the repetition of this URL across rules, it would be worth considering specifying it as a [config variable](https://snakemake.readthedocs.io/en/stable/snakefiles/configuration.html#standard-configuration) instead.
-:::
-
 ### Logging
 
 As usual, we need to specify the file to store logging information:
@@ -81,10 +77,13 @@ Then, we use `3dTstat` to average that file and produce our desired output.
 
 There are two important to things to note about the above command that would cause problems if executed within the current state of the rule:
 
-1. The intermediate file `tcat.nii.gz` would remain present.
-1. More problematically, each invocation of the rule (i.e., across participants) would be writing to the *same* `tcat.nii.gz` file.
+1. The intermediate file `tcat.nii.gz` would remain present after the job has completed.
+1. Each job (i.e., across participants) would be writing to the *same* `tcat.nii.gz` file.
 
 We can resolve both problems by using [*shadowing*](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#shadow-rules).
+When rules are shadowed, their jobs are executed in an isolated temporary directory and only the listed outputs are copied to their correct destination after the job completes.
+For our purposes here, that means that any intermediate files are discarded (resolving the first issue listed above) and that each job gets its own directory (resolving the second issue listed above).
+There are a few options for how Snakemake implements the shadowing; here we are using `shallow`, but see [the Snakemake documentation](https://snakemake.readthedocs.io/en/stable/snakefiles/rules.html#shadow-rules) for other options.
 
 ```{literalinclude} ../workflow/workflow/rules/tmean.smk
 :caption: `workflow/rules/tmean.smk`
@@ -94,11 +93,9 @@ We can resolve both problems by using [*shadowing*](https://snakemake.readthedoc
 ```
 
 
-
 ## Resources
 
-We can provide an indication of the RAM that will be used by a single invocation of the rule by setting the `mem` key as part of the `resources` directive.
-Here, we will specify that Snakemake should budget for the job using up to 1 GB of RAM.
+We will again specify that Snakemake should budget for the job using up to 1 GB of RAM.
 
 ```{literalinclude} ../workflow/workflow/rules/tmean.smk
 :caption: `workflow/rules/tmean.smk`
@@ -116,8 +113,7 @@ As usual, our next step is to add the new rule file to the `Snakefile`:
 :emphasize-lines: 5
 ```
 
-Then we need to tell Snakemake that we want to create the *output* from the motion correction rule, via the `all` rule.
-Note that we no longer need to specify the output from the `acquire_func` rule in `all`, because the output from `acquire_func` is needed as an input for `mot_correct`.
+The output from this rule is now one of our 'highest' level of output, in the sense of not being required for any other rules, so we need to update the `all` rule.
 
 ```{literalinclude} ../workflow/workflow/Snakefile_tmean
 :caption: `workflow/Snakefile`

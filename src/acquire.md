@@ -7,7 +7,6 @@ If we browse to that website and go to the 'Download' tab, we can see that the d
 Our task now is to write Snakemake rules that will use the [AWS CLI](https://aws.amazon.com/cli/) to download the anatomical and functional image data of interest for each of our participants.
 We could potentially aim to download everything in the one rule, but the differences between the file structure of anatomical and functional images makes it simpler to have separate rules.
 
-
 :::{note}
 Ideally, the [S3 storage plugin](https://github.com/snakemake/snakemake-storage-plugin-s3) would allow access to the raw data as required, rather than specifically being downloaded as a first step.
 However, it currently [doesn't support the public data access](https://github.com/snakemake/snakemake-storage-plugin-s3/issues/59) that is required for this raw data.
@@ -100,6 +99,11 @@ and then refer to that definition within the `acquire_anat.smk` rule:
 :lines: 1-10
 :emphasize-lines: 9-10
 ```
+
+:::{note}
+Why does the value for the `container` directive not have a comma (`,`) at the end, but the values for the `output` and `params` directives do have a comma?
+This is mostly a stylistic choice, where commas are being used to indicate directives that *could* have multiple items (in typical usage, at least).
+:::
 
 #### Logging
 
