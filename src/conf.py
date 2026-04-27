@@ -1,4 +1,4 @@
-project = "Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager"
+project = "Snakemake in neuroimaging"
 copyright = "2026, MDAP"
 author = "MDAP"
 version = "0.1"

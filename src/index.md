@@ -12,6 +12,7 @@ acquire.md
 mc.md
 tmean.md
 coreg.md
+figure.md
 ```
 
 <!--
