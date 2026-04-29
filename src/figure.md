@@ -22,13 +22,13 @@ Note that we don't need any wildcards here.
 
 ## Mechanism
 
-To create the figure, we will use Python and the visualisation package `matplotlib` and the NIFTI file interaction package `nibabel`.
-These computational demands pose a new challenge in that they are sufficiently bespoke that finding an appropriate pre-created container may be difficult.
+To create the figure, we will use Python and the visualisation package `matplotlib` and the NIFTI file I/O package `nibabel`.
+These computational demands pose a new challenge in that they are sufficiently specific to this task that finding an appropriate pre-created container may be difficult.
 In this circumstance, we have a few potential options:
 
 1. Add `matplotlib` and `nibabel` as dependencies to the Python project and execute the rule within the project.
 This is the simplest option, but it leaks dependencies into the workflow project and lose the system-level reproducibility that is provided by containerisation.
-Overall though, it is a reasonable compromise.
+Overall though, that may be a reasonable compromise.
 
 1. Use Snakemake's support for [Conda-based package management](https://snakemake.readthedocs.io/en/stable/snakefiles/deployment.html#integrated-package-management).
 However, this requires working within the Conda ecosystem and does not completely resolve the reproducibility loss.

@@ -1,0 +1,29 @@
+BootStrap: docker
+From: ubuntu:noble-20250127
+
+%post
+
+    # install the system Python
+    apt-get update && apt-get install \
+        -y \
+        ca-certificates \
+        python3 \
+        python3-pip \
+        python3-venv \
+        python-is-python3
+
+    # remove temp files
+    apt-get clean && rm -rf /var/lib/apt/lists/*
+
+    # create a clean virtual environment
+    python -m venv /opt/python
+    . /opt/python/bin/activate
+    # install matplotlib and nibabel
+    pip install \
+        matplotlib==3.10.9 \
+        nibabel==5.4.2
+
+%environment
+
+    # insert the venv Python at the front of the search path
+    export PATH="/opt/python/bin:$PATH"
