@@ -18,6 +18,7 @@ Note that we don't need any wildcards here.
 
 ## Inputs
 
+
 ## Parameters
 
 We don't need any custom parameters here, so we will skip the `params` directive.
