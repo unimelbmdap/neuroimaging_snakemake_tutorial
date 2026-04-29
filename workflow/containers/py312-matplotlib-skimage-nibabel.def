@@ -18,9 +18,10 @@ From: ubuntu:noble-20250127
     # create a clean virtual environment
     python -m venv /opt/python
     . /opt/python/bin/activate
-    # install matplotlib and nibabel
+    # install matplotlib, scikit-image, and nibabel
     pip install \
         matplotlib==3.10.9 \
+        scikit-image==0.26.0 \
         nibabel==5.4.2
 
 %environment

@@ -20,6 +20,8 @@ Note that we don't need any wildcards here.
 
 ## Parameters
 
+We don't need any custom parameters here, so we will skip the `params` directive.
+
 ## Mechanism
 
 To create the figure, we will use Python and the visualisation package `matplotlib` and the NIFTI file I/O package `nibabel`.
@@ -40,20 +42,55 @@ Here, we will take the opportunity to learn a bit about creating custom Apptaine
 
 ### Container
 
+Below is an example of an [Apptainer definition file](https://apptainer.org/docs/user/main/definition_files.html) that can be used to build a container with the necessary Python packages.
+We store it within a sub-directory of the root workflow directory called `containers`.
+
+```{literalinclude} ../workflow/containers/py312-matplotlib-nibabel.def
+:caption: `workflow/containers/py312-matplotlib-nibabel.def`
+:language: singularity
+```
+
+The container can then be built by running:
+
+```{code-block} console
+$ apptainer build containers/py312-matplotlib-nibabel.sif containers/py312-matplotlib-nibabel.def
+```
+
+We then add this location to the register of container locations:
+
+```{literalinclude} ../workflow/workflow/rules/common.smk
+:caption: `workflow/rules/common.smk`
+:language: snakemake
+:emphasize-lines: 7
+```
+
+And to the rule:
+
+```{literalinclude} ../workflow/workflow/rules/figure.smk
+:caption: `workflow/rules/figure.smk`
+:language: snakemake
+:lines: 1-9
+:emphasize-lines: 8-9
+```
+
 ### Logging
+
+We won't really need any logging here, so we will skip the `log` directive.
 
 ### Script
 
 ## Resources
 
+We don't need anything special for resources, so we will skip the `resources` directive.
+
 ## Preparing for execution
 
 As usual, our next step is to add the new rule file to the `Snakefile` and adjust the output of the `all` rule:
 
-```{literalinclude} ../workflow/workflow/Snakefile_coreg
+```{literalinclude} ../workflow/workflow/Snakefile_figure
 :caption: `workflow/Snakefile`
 :language: snakemake
-:emphasize-lines: 6, 13
+:emphasize-lines: 7, 14
 ```
 
 Note that we only need to expand this single rule now, given it depends on output from all of the other rules.
