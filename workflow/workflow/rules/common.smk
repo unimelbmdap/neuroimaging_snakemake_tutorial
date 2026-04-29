@@ -4,5 +4,5 @@ TASKS = ["taskswitch", "stopsignal"]
 CONTAINER_SOURCES = {
     "AWS-CLI": "docker://amazon/aws-cli:2.32.21",
     "AFNI": "docker://ghcr.io/neurodesk/afni_26.0.07:20260128",
-    "PY312-MATPLOTLIB-SKIMAGE-NIBABEL": "containers/py312-matplotlib-skimage-nibabel.sif",
+    "PY312-MATPLOTLIB-NIBABEL": "containers/py312-matplotlib-nibabel.sif",
 }

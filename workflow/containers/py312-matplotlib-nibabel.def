@@ -3,14 +3,21 @@ From: ubuntu:noble-20250127
 
 %post
 
+    mkdir -p /tmp/mpl
+    chmod 777 /tmp/mpl
+
     # install the system Python
     apt-get update && apt-get install \
         -y \
         ca-certificates \
+        fontconfig \
+        fonts-liberation \
         python3 \
         python3-pip \
         python3-venv \
         python-is-python3
+
+    fc-cache -fv
 
     # remove temp files
     apt-get clean && rm -rf /var/lib/apt/lists/*
@@ -26,5 +33,6 @@ From: ubuntu:noble-20250127
 
 %environment
 
+    export MPLCONFIGDIR="/tmp/mpl"
     # insert the venv Python at the front of the search path
     export PATH="/opt/python/bin:$PATH"

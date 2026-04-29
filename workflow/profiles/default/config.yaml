@@ -1,3 +1,4 @@
 software-deployment-method: apptainer
+apptainer-args: "--no-home"
 printshellcmds: true
 cores: all

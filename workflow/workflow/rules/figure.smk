@@ -14,7 +14,7 @@ rule figure:
         sub_nums=SUB_NUMS,
         tasks=TASKS,
     container:
-        CONTAINER_SOURCES["PY312-MATPLOTLIB-SKIMAGE-NIBABEL"]
+        CONTAINER_SOURCES["PY312-MATPLOTLIB-NIBABEL"]
     log:
         "logs/figure_log.txt"
     script:
