@@ -3,10 +3,7 @@ From: ubuntu:noble-20250127
 
 %post
 
-    mkdir -p /tmp/mpl
-    chmod 777 /tmp/mpl
-
-    # install the system Python
+    # install the system Python and a nicer font
     apt-get update && apt-get install \
         -y \
         ca-certificates \
@@ -17,6 +14,7 @@ From: ubuntu:noble-20250127
         python3-venv \
         python-is-python3
 
+    # update the font cache
     fc-cache -fv
 
     # remove temp files
@@ -31,8 +29,14 @@ From: ubuntu:noble-20250127
         scikit-image==0.26.0 \
         nibabel==5.4.2
 
+    # make the matplotlib temp directory
+    mkdir -p /tmp/mpl
+    # and make it world-writeable
+    chmod 777 /tmp/mpl
+
 %environment
 
-    export MPLCONFIGDIR="/tmp/mpl"
     # insert the venv Python at the front of the search path
     export PATH="/opt/python/bin:$PATH"
+    # override the default matplotlib temp directory
+    export MPLCONFIGDIR="/tmp/mpl"

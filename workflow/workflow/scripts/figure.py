@@ -10,6 +10,15 @@ import nibabel
 from snakemake.script import snakemake
 
 
+func_paths = {
+    (sub_num, task): path
+    for ((sub_num, task), path) in zip(
+        itertools.product(snakemake.params.sub_nums, snakemake.params.tasks),
+        snakemake.input.func,
+        strict=True,
+    )
+}
+
 mpl.rcParams.update(
     {
         "font.sans-serif": ["Liberation Sans"],
@@ -19,15 +28,6 @@ mpl.rcParams.update(
         "axes.labelpad": 8,
     },
 )
-
-func_paths = {
-    (sub_num, task): path
-    for ((sub_num, task), path) in zip(
-        itertools.product(snakemake.params.sub_nums, snakemake.params.tasks),
-        snakemake.input.func,
-        strict=True,
-    )
-}
 
 (fig, axs) = plt.subplots(
     figsize=[7.2, 4.5],
@@ -66,7 +66,7 @@ for (row_axs, sub_num, sub_anat_path, sub_func_anat_grid_path) in zip(
 
         func = nibabel.load(func_paths[(sub_num, task)]).get_fdata()
 
-        ts_ax.plot(func.mean(axis=(0, 1, 2)), label=task, alpha=0.7)
+        ts_ax.plot(func.mean(axis=(0, 1, 2)), label=task, alpha=0.7, lw=1)
 
     if sub_num == snakemake.params.sub_nums[-1]:
         ts_ax.legend(fontsize="small", frameon=False)

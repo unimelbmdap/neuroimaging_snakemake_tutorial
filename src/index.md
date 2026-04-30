@@ -1,9 +1,5 @@
 # Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager
 
-<!--
-## Contents
--->
-
 ```{toctree}
 :hidden:
 setup.md
@@ -14,6 +10,10 @@ tmean.md
 coreg.md
 figure.md
 ```
+
+Please cite the accompanying paper:
+
+> Mannion, D.J., Quiroga, M.M., Paul, J.M., & Garrido, M.I. (2026) Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager. *PsyArXiv*. [https://doi.org/10.31234/osf.io/fmdvn_v1](https://doi.org/10.31234/osf.io/fmdvn_v1)
 
 <!--
 [Setup and preparation](setup.md)

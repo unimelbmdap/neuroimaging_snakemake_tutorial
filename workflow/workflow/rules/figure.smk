@@ -3,11 +3,7 @@ rule figure:
     input:
         anat=collect(rules.coreg.output.anat_img, sub_num=SUB_NUMS),
         func_anat_grid=collect(rules.coreg.output.func_img, sub_num=SUB_NUMS),
-        func=collect(
-            rules.mot_correct.output.img,
-            sub_num=SUB_NUMS,
-            task=TASKS,
-        ),
+        func=collect(rules.mot_correct.output.img, sub_num=SUB_NUMS, task=TASKS),
     output:
         png="results/derivatives/group/group_figure.png",
     params:

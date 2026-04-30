@@ -5,23 +5,39 @@ The final step is to create a visualisation that uses data from all participants
 ## Outputs
 
 We want to produce a single PNG file containing the visualisation.
-
 We start by creating a new rule (`workflow/rules/figure.smk`) that has this `output` information:
 
 ```{literalinclude} ../workflow/workflow/rules/figure.smk
 :caption: `workflow/rules/figure.smk`
 :language: snakemake
-:lines: 1-2, 6-7
+:lines: 1-2, 7-8
 ```
 
 Note that we don't need any wildcards here.
 
 ## Inputs
 
+The visualisation will include, for each participant, an example slice from their anatomical and mean functional images and a depiction of the mean timeseries (over voxels) for the two task types.
+We can use the now-familiar approach of `collect`ing paths based on the output of prior rules to specify these inputs:
+
+```{literalinclude} ../workflow/workflow/rules/figure.smk
+:caption: `workflow/rules/figure.smk`
+:language: snakemake
+:lines: 1-8
+:emphasize-lines: 3-6
+```
 
 ## Parameters
 
-We don't need any custom parameters here, so we will skip the `params` directive.
+We will specify the `SUB_NUMS` and `TASKS` variables as parameters, so that they are available to the processing script:
+
+```{literalinclude} ../workflow/workflow/rules/figure.smk
+:caption: `workflow/rules/figure.smk`
+:language: snakemake
+:lines: 1-11
+:emphasize-lines: 9-
+```
+
 
 ## Mechanism
 
@@ -43,7 +59,8 @@ Here, we will take the opportunity to learn a bit about creating custom Apptaine
 
 ### Container
 
-Below is an example of an [Apptainer definition file](https://apptainer.org/docs/user/main/definition_files.html) that can be used to build a container with the necessary Python packages.
+Below is an [Apptainer definition file](https://apptainer.org/docs/user/main/definition_files.html) that can be used to build a container with the necessary Python packages.
+While it is out of the scope of this tutorial to describe the construction of the definition in detail, hopefully the specification below is readable and gives an indication of how they are created.
 We store it within a sub-directory of the root workflow directory called `containers`.
 
 ```{literalinclude} ../workflow/containers/py312-matplotlib-nibabel.def
@@ -80,6 +97,9 @@ We won't really need any logging here, so we will skip the `log` directive.
 
 ### Script
 
+```{literalinclude} ../workflow/workflow/scripts/figure.py
+:caption: `workflow/scripts/figure.py`
+```
 ## Resources
 
 We don't need anything special for resources, so we will skip the `resources` directive.
@@ -103,3 +123,10 @@ Finally, you can run Snakemake and execute the workflow:
 ```console
 $ uv run snakemake
 ```
+
+```{figure} _static/group_figure.png
+
+`results/derivatives/group/group_figure.png`
+```
+
+
