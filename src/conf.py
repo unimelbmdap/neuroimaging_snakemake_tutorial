@@ -8,6 +8,7 @@ extensions = [
     "myst_parser",
     "sphinx_copybutton",
     "sphinxext.opengraph",
+    "sphinxcontrib.mermaid",
 ]
 
 # update this when live

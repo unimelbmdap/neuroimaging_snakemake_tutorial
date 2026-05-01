@@ -9,6 +9,7 @@ mc.md
 tmean.md
 coreg.md
 figure.md
+summary.md
 ```
 
 This is a detailed worked example of how the workflow manager [Snakemake](https://snakemake.readthedocs.io) can be used to specify and execute workflows for processing and analysing neuroimaging data.
@@ -49,3 +50,6 @@ If you find this useful, please consider letting us know via [email](mailto:dami
 
 [Visualisation](figure.md)
 : Produces an example visualisation of the processed data.
+
+[Summary](summary.md)
+: Summaries the workflow generation process.
