@@ -123,7 +123,15 @@ We can convert this into a more useful representation --- in this case, a dictio
 
 ```{literalinclude} ../workflow/workflow/scripts/figure.py
 :caption: `workflow/scripts/figure.py`
+:lines: 1, 7-19
 ```
+
+This can then be used in the rest of the script --- which we won't go through in any detail.
+
+:::{note}
+To keep things simple, the script hard-codes assumptions and does not do any validation --- generally doesn't follow best practices.
+It shouldn't be used as a demonstration of good Python or as a template to use for similar tasks.
+:::
 
 ```{literalinclude} ../workflow/workflow/scripts/figure.py
 :caption: `workflow/scripts/figure.py`
@@ -135,15 +143,15 @@ We don't need anything special for resources, so we will skip the `resources` di
 
 ## Preparing for execution
 
-As usual, our next step is to add the new rule file to the `Snakefile` and adjust the output of the `all` rule:
+We add the new rule file to the `Snakefile` and adjust the output of the `all` rule:
 
-```{literalinclude} ../workflow/workflow/Snakefile_figure
+```{literalinclude} ../workflow/workflow/Snakefile
 :caption: `workflow/Snakefile`
 :language: snakemake
 :emphasize-lines: 7, 14
 ```
 
-Note that we only need to expand this single rule now, given it depends on output from all of the other rules.
+Note that we only need to this single rule now, given it depends on output from all of the other rules.
 
 ## Executing the workflow
 
@@ -152,6 +160,8 @@ Finally, you can run Snakemake and execute the workflow:
 ```console
 $ uv run snakemake
 ```
+
+This produces a figure looking something like:
 
 ```{figure} _static/group_figure.png
 
