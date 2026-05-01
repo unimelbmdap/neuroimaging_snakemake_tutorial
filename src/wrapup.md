@@ -1,6 +1,6 @@
-# Summary
+# Wrap-up
 
-In this worked example, we have used Snakemake to construct and implement a reproducible and transparent workflow for a simulated data analysis.
+In this worked example, we have used Snakemake to construct and implement a reproducible and transparent workflow for a data analysis.
 
 ## Running the workflow from scratch
 
@@ -35,7 +35,9 @@ This output can then be passed to the `dot` application (see [Graphviz](https://
 $ uv run snakemake --rulegraph | dot -Tsvg -o rulegraph.svg
 ```
 
-```{figure} _static/rulegraph.svg
+```{image} _static/rulegraph.svg
+:alt: Depiction of the Snakemake workflow rulegraph.
+:align: center
 ```
 
 There is also the `--dag` option, similar to the above --- however, it can produce crowded output and tends to be less useful than the rulegraph for realistic workflows.
@@ -45,7 +47,25 @@ However, it does produce a nice visualisation here:
 $ uv run snakemake --dag | dot -Tsvg -o dag.svg
 ```
 
-```{figure} _static/dag.svg
+```{image} _static/dag.svg
+:alt: Depiction of the Snakemake workflow DAG.
+:align: center
 ```
 
 These visualisations are a great way of debugging and validating the connectivity between rules.
+
+## Potential next steps
+
+That concludes this worked example.
+However, you may now like to start experimenting with the workflow.
+A few ideas you might like to investigate are:
+
+* Try changing the shell command or script associated with a rule and then run Snakemake with the `--dry-run` argument.
+Which jobs do and don't require re-execution after the change?
+
+* Maybe you would like to use a different software package to run the motion correction.
+Try altering the rule to use software like FSL or SPM instead of AFNI.
+
+* Try doing an analysis of the task data, such as running a GLM for each participant.
+
+* Try using R instead of Python for the visualisation.

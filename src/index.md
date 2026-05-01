@@ -9,7 +9,7 @@ mc.md
 tmean.md
 coreg.md
 figure.md
-summary.md
+wrapup.md
 ```
 
 This is a detailed worked example of how the workflow manager [Snakemake](https://snakemake.readthedocs.io) can be used to specify and execute workflows for processing and analysing neuroimaging data.
@@ -17,6 +17,7 @@ This is a detailed worked example of how the workflow manager [Snakemake](https:
 The accompanying manuscript [Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager](https://osf.io/preprints/psyarxiv/fmdvn_v1) describes the motivation and advantages for using Snakemake and provides a conceptual overview of its operation.
 We recommend reading the manuscript prior to working through this tutorial.
 In the manuscript, we describe a simple example workflow that processes [publicly-available data](https://doi.org/10.18112/openneuro.ds000030.v1.0.0) from an fMRI study by Poldrack et al. (2016).
+
 In this website, we extend this example by:
 * Providing stepwise instructions that show how a workflow can be built incrementally.
 * Adding additional workflow stages that highlight the flexibility and capacity of Snakemake as a whole-workflow manager.
