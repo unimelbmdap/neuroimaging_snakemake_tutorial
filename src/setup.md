@@ -1,11 +1,11 @@
 # Preparation
 
-Following the example will require typing commands into a console and using a text editor.
+Following along with this worked example will require typing commands into a console and using a text editor.
 
-The console commands are prefixed with a `$` and are based on using the Bash shell --- they may require minor modifications on other shells.
+The console commands are displayed with a `$` prefix and assume the use of a Bash shell --- they may require minor modifications on other shells.
 You are free to use whichever text editor you prefer, such as vim, emacs, nano, or VSCode.
 
-This guide has been written using a Linux platform.
+This guide has been written using the Linux platform.
 However, it is likely to work on Mac platforms without modification.
 It may be able to run natively on Windows with some modification, but we recommend using the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install) to instead use Linux within Windows.
 
