@@ -1,6 +1,21 @@
 # Preparation
 
+Following the example will require typing commands into a console and using a text editor.
+
+The console commands are prefixed with a `$` and are based on using the Bash shell --- they may require minor modifications on other shells.
+You are free to use whichever text editor you prefer, such as vim, emacs, nano, or VSCode.
+
+This guide has been written using a Linux platform.
+However, it is likely to work on Mac platforms without modification.
+It may be able to run natively on Windows with some modification, but we recommend using the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install) to instead use Linux within Windows.
+
+:::{note}
+It will also require about 10 GB of disk space.
+:::
+
 ## Install required software
+
+Following the example will require two critical software applications to be available: Apptainer and uv.
 
 ### Apptainer
 
@@ -39,9 +54,10 @@ uv 0.11.7 (x86_64-unknown-linux-gnu)
 
 ## Initialise project
 
-First, set your working directory to the base directory of your project.
+The first step is to decide a storage location that will be the base directory of the project.
 It is best if this directory is empty at this point.
 
+Begin by changing to this directory using the `cd` command.
 You can check what directory you are currently in by running:
 ```{code-block} console
 $ echo $PWD
@@ -100,6 +116,9 @@ At this point, the contents of the project directory should be:
 
 ## Set default Snakemake command-line arguments
 
+There are some command-line arguments that we will always use when we execute Snakemake.
+To avoid having to specify them each time, and to provide some additional documentation for how we are running Snakemake, we can create a [profile](https://snakemake.readthedocs.io/en/stable/executing/cli.html#profiles).
+
 First, make the directory that will contain the command-line argument configuration file: 
 
 ```{code-block} console
@@ -112,7 +131,6 @@ Then, specify the configuration in YAML format in the `config.yaml` file:
 :caption: `workflow/profiles/default/config.yaml`
 :language: yaml
 ```
-
 
 :::{note}
 You may want to set the value of the `cores` key to a number rather than `all`, to limit how many cores Snakemake can use at a time.

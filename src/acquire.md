@@ -12,6 +12,19 @@ Ideally, the [S3 storage plugin](https://github.com/snakemake/snakemake-storage-
 However, it currently [doesn't support the public data access](https://github.com/snakemake/snakemake-storage-plugin-s3/issues/59) that is required for this raw data.
 :::
 
+When implementing a new rule, we will take the general approach of working through the key rule components in turn (where required for a given rule):
+
+* Outputs
+* Inputs
+* Parameters
+* Mechanism
+	* Container
+	* Logging
+	* Command
+* Resources
+
+See [the manuscript](https://osf.io/preprints/psyarxiv/fmdvn_v1) for a detailed explanation of each of these components.
+
 ## Rule for anatomical image acquisition
 
 We will first tackle the rule to acquire the anatomical images.
@@ -19,7 +32,7 @@ We will first tackle the rule to acquire the anatomical images.
 ### Outputs
 
 The first step is to think about the outputs that the rule will produce.
-Given our list of subject numbers, we expect that the workflow will generate the following output files:
+Given our list of subject numbers, we want the workflow to generate the following output files:
 
 ```{code-block} none
 :class: console-output
@@ -38,7 +51,11 @@ results/sub-{sub_num}/anat/sub-{sub_num}_T1w.nii.gz
 
 As you can see, each of the required output files can be created by plugging in a particular value for `sub_num`.
 
-We can now start to create the rule, called `acquire_anat`, that specifies a single output that we refer to as `nii` and that contains the `sub_num` wildcard:
+:::{note}
+We will use 'subject' and 'participant' interchangeably in this documentation, consistent with its usage in the Brain Imaging Data Structure (BIDS).
+:::
+
+We can now start to create the rule, called `acquire_anat`, that specifies a single output that we refer to as `img` (that decision is up to us) and that contains the `sub_num` wildcard:
 
 ```{literalinclude} ../workflow/workflow/rules/acquire_anat.smk
 :caption: `workflow/workflow/rules/acquire_anat.smk`
@@ -59,7 +76,7 @@ For our purposes, it is useful to build the OpenNeuro URL as a parameter that ca
 In particular, we just need to combine the study data location (the S3 URL `s3://openneuro.org/ds000030/`) with the relative location of an output image (without the `results/` prefix).
 
 Because we need the output path *after* the `sub_num` wildcard has been replaced with a specific value, we specify this parameter as a function.
-Here, we use an anonymous (lambda) function and use the provided `output` argument:
+Here, we use an anonymous (lambda) function and use the provided `output` argument to construct the URL:
 
 ```{literalinclude} ../workflow/workflow/rules/acquire_anat.smk
 :caption: `workflow/workflow/rules/acquire_anat.smk`
@@ -67,6 +84,8 @@ Here, we use an anonymous (lambda) function and use the provided `output` argume
 :lines: 1-8
 :emphasize-lines: 5-8
 ```
+
+When the function is called during the execution of a Snakemake job, the `output.img` variable will contain the string from the `img` item of the `output` directive (`"results/sub-{sub_num}/anat/sub-{sub_num}_T1w.nii.gz"`) but with the `{sub_num}` wildcard replaced by the subject number that is active for the job (e.g., `"results/sub-10159/anat/sub-10159_T1w.nii.gz"`).
 
 ### Mechanism
 
@@ -87,7 +106,7 @@ Because we might want to use the same container sources in multiple rules, we ca
 ```{literalinclude} ../workflow/workflow/rules/common.smk
 :caption: `workflow/workflow/rules/common.smk`
 :language: snakemake
-:lines: 1-5, 7
+:lines: 1-5, 8
 :emphasize-lines: 4-
 ```
 
@@ -102,7 +121,8 @@ and then refer to that definition within the `acquire_anat.smk` rule:
 
 :::{note}
 Why does the value for the `container` directive not have a comma (`,`) at the end, but the values for the `output` and `params` directives do have a comma?
-This is mostly a stylistic choice, where commas are being used to indicate directives that *could* have multiple items (in typical usage, at least).
+This is mostly a stylistic choice, where we use commas to indicate directives that *could* have multiple items (in typical usage, at least).
+This is particularly useful for version control because adding a new item doesn't require changing the last item (to add a `,` at the end), and so the diff is isolated to the new item.
 :::
 
 #### Logging
@@ -198,16 +218,17 @@ We can thus specify the rule output as:
 
 ### Mechanism
 
+Because of the way we constructed the anatomical acquisition rule, it mostly also applies to the functional acquisition without modification.
+
 #### Logging
 
-We need to override the path for the log file:
+We only need to override the path for the log file:
 
 ```{literalinclude} ../workflow/workflow/rules/acquire_func.smk
 :caption: `workflow/workflow/rules/acquire_func.smk`
 :language: snakemake
 :emphasize-lines: 4-
 ```
-
 
 ## Preparing for execution
 

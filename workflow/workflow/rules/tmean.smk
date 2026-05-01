@@ -18,8 +18,8 @@ rule tmean:
         "shallow"
     shell:
         """
-        # concatenate the input images over time into one output image
-        3dTcat -prefix tcat.nii.gz {input.imgs} > {log} 2>&1
-        # average the concatenated image over time
-        3dTstat -prefix {output.img} -mean tcat.nii.gz > {log} 2>&1
+# concatenate the input images over time into one output image
+3dTcat -prefix tcat.nii.gz {input.imgs} > {log} 2>&1
+# average the concatenated image over time
+3dTstat -prefix {output.img} -mean tcat.nii.gz >> {log} 2>&1
         """

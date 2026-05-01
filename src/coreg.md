@@ -15,6 +15,16 @@ We start by creating a new rule (`workflow/rules/coreg.smk`) that has this `outp
 :lines: 1-2, 6-7
 ```
 
+For subsequent visualisation, it is also useful to have a copy of the mean functional image after it has been resampled into the grid of the coregistered anatomical image.
+We add that file as an additional output of the rule:
+
+```{literalinclude} ../workflow/workflow/rules/coreg.smk
+:caption: `workflow/rules/coreg.smk`
+:language: snakemake
+:lines: 1-2, 6-8
+:emphasize-lines: 5
+```
+
 ## Inputs
 
 The coregistration process requires two inputs per participant: their anatomical image and their mean functional image.
@@ -23,7 +33,7 @@ We enter these as separate items, with their paths given by the output from the 
 ```{literalinclude} ../workflow/workflow/rules/coreg.smk
 :caption: `workflow/rules/coreg.smk`
 :language: snakemake
-:lines: 1-7
+:lines: 1-8
 :emphasize-lines: 3-5
 ```
 
@@ -35,8 +45,8 @@ We can use the Snakemake helper function [subpath](https://snakemake.readthedocs
 ```{literalinclude} ../workflow/workflow/rules/coreg.smk
 :caption: `workflow/rules/coreg.smk`
 :language: snakemake
-:lines: 1-9
-:emphasize-lines: 8-
+:lines: 1-10
+:emphasize-lines: 9-
 ```
 
 ## Mechanism
@@ -48,8 +58,8 @@ We will use the same AFNI container that we have used in previous rules:
 ```{literalinclude} ../workflow/workflow/rules/coreg.smk
 :caption: `workflow/rules/coreg.smk`
 :language: snakemake
-:lines: 1-11
-:emphasize-lines: 10-
+:lines: 1-12
+:emphasize-lines: 11-
 ```
 
 ### Logging
@@ -59,25 +69,20 @@ As usual, we need to specify the file to store logging information (particularly
 ```{literalinclude} ../workflow/workflow/rules/coreg.smk
 :caption: `workflow/rules/coreg.smk`
 :language: snakemake
-:lines: 1-13
-:emphasize-lines: 12-
+:lines: 1-14
+:emphasize-lines: 13-
 ```
 
 ### Shell command
 
-We will use the `align_epi_anat.py` AFNI command to run the coregistration:
+We will use the `align_epi_anat.py` AFNI command to run the coregistration and resample the mean functional image:
 
 ```{literalinclude} ../workflow/workflow/rules/coreg.smk
 :caption: `workflow/rules/coreg.smk`
 :language: snakemake
-:lines: 1-13, 19-
-:emphasize-lines: 14-
+:lines: 1-14, 20-
+:emphasize-lines: 15-
 ```
-
-:::{note}
-We use the `>>` operator, rather than `>`, to redirect to the log file in the second command.
-This is because the `>>` appends to an existing file, whereas `>` would overwrite the output from the first command.
-:::
 
 ### Shadowing
 
@@ -86,10 +91,9 @@ Because this command produces quite a few intermediate outputs, we will again us
 ```{literalinclude} ../workflow/workflow/rules/coreg.smk
 :caption: `workflow/rules/coreg.smk`
 :language: snakemake
-:lines: 1-15, 19-
-:emphasize-lines: 14-15
+:lines: 1-16, 20-
+:emphasize-lines: 15-16
 ```
-
 
 ## Resources
 
@@ -98,17 +102,18 @@ We will give Snakemake a bit more RAM allowance for this job:
 ```{literalinclude} ../workflow/workflow/rules/coreg.smk
 :caption: `workflow/rules/coreg.smk`
 :language: snakemake
-:lines: 1-17, 19-
-:emphasize-lines: 16-17
+:lines: 1-18, 20-
+:emphasize-lines: 17-18
 ```
 
-Something about threads.
+We will also allow it to use two cores when executing each job using the `threads` directive:
 
 ```{literalinclude} ../workflow/workflow/rules/coreg.smk
 :caption: `workflow/rules/coreg.smk`
 :language: snakemake
-:emphasize-lines: 18
+:emphasize-lines: 19
 ```
+
 ## Preparing for execution
 
 As usual, our next step is to add the new rule file to the `Snakefile` and adjust the output of the `all` rule:

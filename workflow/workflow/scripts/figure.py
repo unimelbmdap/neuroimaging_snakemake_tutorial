@@ -3,13 +3,12 @@ import itertools
 import matplotlib as mpl
 import matplotlib.pyplot as plt
 
-import skimage.util
-
 import nibabel
 
 from snakemake.script import snakemake
 
 
+# convert the flattened list from Snakemake
 func_paths = {
     (sub_num, task): path
     for ((sub_num, task), path) in zip(
@@ -19,6 +18,7 @@ func_paths = {
     )
 }
 
+# set some matplotlib parameters
 mpl.rcParams.update(
     {
         "font.sans-serif": ["Liberation Sans"],
@@ -38,6 +38,9 @@ mpl.rcParams.update(
     sharex="col",
 )
 
+# the index in the left-right dimension to display
+i_lr = 130
+
 for (row_axs, sub_num, sub_anat_path, sub_func_anat_grid_path) in zip(
     axs,
     snakemake.params.sub_nums,
@@ -51,21 +54,17 @@ for (row_axs, sub_num, sub_anat_path, sub_func_anat_grid_path) in zip(
     anat = nibabel.load(sub_anat_path).get_fdata()
     func_anat_grid = nibabel.load(sub_func_anat_grid_path).get_fdata()
 
-    i_lr = 130
-
-    anat_ax.matshow(anat[i_lr, :, ::-1].T, cmap="grey")
-    anat_ax.xaxis.set_visible(False)
-    anat_ax.yaxis.set_visible(False)
+    anat_ax.matshow(anat[i_lr, :, ::-1].T, cmap="gray")
     anat_ax.set_title(f"Subject: {sub_num}")
 
-    func_ax.matshow(func_anat_grid[i_lr, :, ::-1].T, cmap="grey")
-    func_ax.xaxis.set_visible(False)
-    func_ax.yaxis.set_visible(False)
+    func_ax.matshow(func_anat_grid[i_lr, :, ::-1].T, cmap="gray")
+
+    for ax in (anat_ax, func_ax):
+        ax.xaxis.set_visible(False)
+        ax.yaxis.set_visible(False)
 
     for task in snakemake.params.tasks:
-
         func = nibabel.load(func_paths[(sub_num, task)]).get_fdata()
-
         ts_ax.plot(func.mean(axis=(0, 1, 2)), label=task, alpha=0.7, lw=1)
 
     if sub_num == snakemake.params.sub_nums[-1]:

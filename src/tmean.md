@@ -1,6 +1,6 @@
 # Temporal averaging
 
-The next step is to average together, over time, all the motion-corrected functional images.
+The next step is to average together, over time, all the motion-corrected functional images for a given participant.
 
 ## Outputs
 
@@ -72,6 +72,11 @@ Then, we use `3dTstat` to average that file and produce our desired output.
 :lines: 1-14, 19-
 :emphasize-lines: 15-
 ```
+
+:::{note}
+We use the `>>` operator, rather than `>`, to redirect to the log file in the second command.
+This is because the `>>` appends to an existing file, whereas `>` would overwrite the output from the first command.
+:::
 
 ### Shadowing
 

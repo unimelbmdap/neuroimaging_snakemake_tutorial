@@ -5,6 +5,7 @@ The first step in processing the raw data is to perform motion correction.
 ## Outputs
 
 We want to produce a motion-corrected NIFTI file, with a similar filename structure to the raw data but with the additional BIDS entity `desc` that has the label `mc`.
+
 We start by creating a new rule (`workflow/rules/mot_correct.smk`) that has this `output` information:
 
 ```{literalinclude} ../workflow/workflow/rules/mot_correct.smk
@@ -73,6 +74,7 @@ That gives us all the information we need to specify the container for the rule,
 ```{literalinclude} ../workflow/workflow/rules/common.smk
 :caption: `workflow/rules/common.smk`
 :language: snakemake
+:lines: 1-6, 8
 :emphasize-lines: 6
 ```
 
@@ -105,7 +107,7 @@ As usual, we need to specify the file to store logging information:
 ### Script
 
 In the previous rule, we directly specified a shell command.
-Although this command is not all that complex, we will instead use a Python script to execute the rule.
+Although the command we need to run to do the motion correction is not very complex, we will instead use a Python script to execute the rule.
 This is implemented using the `script` directive, which has a value that is the path to the Python file relative to the location of the rule.
 By convention, scripts are stored in `workflow/scripts/`; given that this rule is in `workflow/rules/`, the relative path begins with `../scripts/`.
 

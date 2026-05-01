@@ -25,11 +25,14 @@ align_epi_anat.py \
 -epi_base 0 -giant_move \
 > {log} 2>&1
 # convert the resulting files into NIFTI format
-3dcopy {params.anat_stem}_al+orig {output.anat_img} >> {log} 2>&1
+3dcopy \
+{params.anat_stem}_al+orig \
+{output.anat_img} \
+>> {log} 2>&1
 # save a copy of the functional in the anatomical grid
 3dresample \
 -inset {input.func} \
 -master {output.anat_img} \
 -prefix {output.func_img} \
-> {log} 2>&1
+>> {log} 2>&1
         """

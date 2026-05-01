@@ -4,5 +4,5 @@ include: "rules/acquire_func.smk"
 
 rule all:
     input:
-        expand(rules.acquire_anat.output.nii, sub_num=SUB_NUMS),
-        expand(rules.acquire_func.output.nii, sub_num=SUB_NUMS, task=TASKS),
+        expand(rules.acquire_anat.output.img, sub_num=SUB_NUMS),
+        expand(rules.acquire_func.output.img, sub_num=SUB_NUMS, task=TASKS),
