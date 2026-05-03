@@ -73,46 +73,15 @@ $ uv init --bare
 We then add our key dependency, Snakemake:
 
 ```{code-block} console
-$ uv add snakemake
+$ uv add snakemake=='9.9.0'
 ```
 
 This will create a `uv.lock` file, which records the version of Snakemake that is used and the versions of its dependencies.
 This allows others to reproduce the Python environment that was used in the project.
 
-
-<!--
-We then make a few directories that will contain the project files:
-
-```{code-block} console
-$ mkdir workflow
-$ mkdir workflow/rules
-$ mkdir workflow/scripts
-$ mkdir results
-$ mkdir logs
-$ mkdir profiles
-$ mkdir profiles/default
-```
-
--->
-
-<!--use `tree -F`-->
-<!--
-At this point, the contents of the project directory should be:
-
-
-```{code-block} none
-./
-├── logs/
-├── profiles/
-│   └── default/
-├── pyproject.toml
-├── results/
-├── uv.lock
-└── workflow/
-    ├── rules/
-    └── scripts/
-```
--->
+:::{note}
+We have pinned Snakemake to a specific version to prevent conflicts between this guide and future updates to Snakemake.
+:::
 
 ## Set default Snakemake command-line arguments
 
