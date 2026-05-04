@@ -10,8 +10,10 @@ However, it is likely to work on Mac platforms without modification.
 It may be able to run natively on Windows with some modification, but we recommend using the [Windows Subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/install) to instead use Linux within Windows.
 
 :::{note}
-It will also require about 10 GB of disk space.
+Another option is to use the operating system provided by the [Neurodesk](https://neurodesk.org/) project.
 :::
+
+It will also require about 10 GB of disk space.
 
 ## Install required software
 
@@ -21,6 +23,10 @@ Following the example will require two critical software applications to be avai
 
 We will be using the Apptainer software to execute computational jobs in containers.
 It can be installed by following [the instructions from Apptainer](https://apptainer.org/docs/admin/main/installation#).
+
+:::{note}
+If you are using Neurodesk, Apptainer is likely to be already installed.
+:::
 
 To check that Apptainer has been installed, you can ask it to print its version information:
 
