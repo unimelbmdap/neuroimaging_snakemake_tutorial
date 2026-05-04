@@ -22,6 +22,12 @@ In this website, we extend this example by:
 * Providing stepwise instructions that demonstrates how a workflow can be built incrementally.
 * Adding additional workflow stages that highlight the flexibility and capacity of Snakemake as a comprehensive workflow manager.
 
+We will be working through the implementation of the below workflow:
+
+```{image} _static/rulegraph.svg
+:alt: Depiction of the Snakemake workflow rulegraph.
+:align: center
+```
 
 Please report any issues or raise any questions via [email](mailto:damien.mannion@unimelb.edu.au) or the [issue tracker](https://github.com/unimelbmdap/neuroimaging_snakemake_tutorial) in the repository.
 
