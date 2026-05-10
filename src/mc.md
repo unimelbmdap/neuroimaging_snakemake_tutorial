@@ -121,22 +121,14 @@ By convention, scripts are stored in `workflow/scripts/`; given that this rule i
 Before looking at the Python script, it is worth thinking about the command that the script will need to execute.
 For motion correction, we will use the `3dvolreg` command with `base` and `prefix` named parameters and the input as positional arguments.
 
-We can start the script by importing a special Snakemake object that is inserted by Snakemake at runtime and contains useful information for constructing the command:
-
-```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
-:caption: `workflow/scripts/mot_correct.py`
-:language: python
-:lines: 3
-```
-
+When the Python script is executed by Snakemake, it inserts a special object named `snakemake` that contains useful information for constructing the command.
 The `snakemake` object has a `log` attribute, which contains the information from the `log` directive in the rule.
 We start by opening this log file to be able to write to it during execution:
 
 ```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
 :caption: `workflow/scripts/mot_correct.py`
 :language: python
-:lines: 3-6
-:emphasize-lines: 3-4
+:lines: 3-4
 ```
 
 Now we can build the command, using the `snakemake` object to obtain the necessary information for the command arguments:
@@ -148,8 +140,8 @@ In AFNI, the volume within a file is referenced using square brackets after the 
 ```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
 :caption: `workflow/scripts/mot_correct.py`
 :language: python
-:lines: 3-13
-:emphasize-lines: 6-
+:lines: 3-11
+:emphasize-lines: 4-
 ```
 
 It is helpful for record-keeping and debugging to store the command that was executed.
@@ -158,8 +150,8 @@ We can do that by printing the command to the log file:
 ```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
 :caption: `workflow/scripts/mot_correct.py`
 :language: python
-:lines: 3-16
-:emphasize-lines: 13-
+:lines: 3-14
+:emphasize-lines: 11-
 ```
 
 Finally, we execute the command using the `run` function from the built-in Python `subprocess` package --- providing the log file handle so that any content from standard output or standard error is stored within the log file:
@@ -167,7 +159,7 @@ Finally, we execute the command using the `run` function from the built-in Pytho
 ```{literalinclude} ../workflow/workflow/scripts/mot_correct.py
 :caption: `workflow/scripts/mot_correct.py`
 :language: python
-:emphasize-lines: 1, 18-
+:emphasize-lines: 1, 16-
 ```
 
 ## Resources

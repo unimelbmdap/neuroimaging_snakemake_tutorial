@@ -5,8 +5,6 @@ import matplotlib.pyplot as plt
 
 import nibabel
 
-from snakemake.script import snakemake
-
 
 # convert the flattened list from Snakemake
 func_paths = {

@@ -1,7 +1,5 @@
 import subprocess
 
-from snakemake.script import snakemake
-
 # open the log file for writing
 with open(snakemake.log[0], "w") as log_handle:
 
