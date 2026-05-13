@@ -14,7 +14,7 @@ wrapup.md
 
 This is a detailed worked example of how the workflow manager [Snakemake](https://snakemake.readthedocs.io) can be used to specify and execute workflows for processing and analysing neuroimaging data.
 
-The accompanying manuscript, [Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager](https://osf.io/preprints/psyarxiv/fmdvn_v1), describes the motivation and advantages for using Snakemake and provides a conceptual overview of its operation.
+The accompanying manuscript, [Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager](https://doi.org/10.31234/osf.io/fmdvn_v2), describes the motivation and advantages for using Snakemake and provides a conceptual overview of its operation.
 We recommend reading the manuscript prior to working through this tutorial.
 In the manuscript, we describe a simple example workflow that processes [publicly-available data](https://doi.org/10.18112/openneuro.ds000030.v1.0.0) from an fMRI study by Poldrack et al. (2016).
 
@@ -33,7 +33,7 @@ Please report any issues or raise any questions via [email](mailto:damien.mannio
 
 If you find this useful, please consider letting us know via [email](mailto:damien.mannion@unimelb.edu.au) and by citing the accompanying paper:
 
-> Mannion, D.J., Quiroga, M.M., Paul, J.M., & Garrido, M.I. (2026) Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager. *PsyArXiv*. [https://doi.org/10.31234/osf.io/fmdvn_v1](https://doi.org/10.31234/osf.io/fmdvn_v1)
+> Mannion, D.J., Quiroga, M.M., Paul, J.M., & Garrido, M.I. (2026) Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager. *PsyArXiv*. [https://doi.org/10.31234/osf.io/fmdvn_v2](https://doi.org/10.31234/osf.io/fmdvn_v2)
 
 ## Contents
 
