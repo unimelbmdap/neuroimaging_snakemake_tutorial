@@ -33,7 +33,7 @@ Please report any issues or raise any questions via [email](mailto:damien.mannio
 
 If you find this useful, please consider letting us know via [email](mailto:damien.mannion@unimelb.edu.au) and by citing the accompanying paper:
 
-> Mannion, D.J., Quiroga, M.M., Paul, J.M., & Garrido, M.I. (2026) Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager. *PsyArXiv*. [https://doi.org/10.31234/osf.io/fmdvn_v2](https://doi.org/10.31234/osf.io/fmdvn_v2)
+> Mannion, D.J., Quiroga, M.M., Paul, J.M., & Garrido, M.I. (2026) Orchestrating neuroimaging data processing using the 'Snakemake' workflow manager. *PsyArXiv*. [https://doi.org/10.31234/osf.io/fmdvn_v3](https://doi.org/10.31234/osf.io/fmdvn_v3)
 
 ## Contents
 
