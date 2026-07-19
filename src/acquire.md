@@ -23,7 +23,7 @@ When implementing a new rule, we will take the general approach of working throu
 	* Command
 * Resources
 
-See [the manuscript](https://doi.org/10.31234/osf.io/fmdvn_v2) for a detailed explanation of each of these components.
+See [the manuscript](https://doi.org/10.31234/osf.io/fmdvn_v3) for a detailed explanation of each of these components.
 
 ## Rule for anatomical image acquisition
 
