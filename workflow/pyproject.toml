@@ -3,5 +3,7 @@ name = "workflow"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
+    "gitpython>=3.1.46",
     "snakemake==9.9.0",
+    "urllib3>=2.7.0",
 ]
