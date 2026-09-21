@@ -13,7 +13,7 @@ dependencies = [
     "sphinx-code-include>=2.0.0",
     "sphinx-copybutton>=0.5.2",
     "sphinxext-opengraph[social-cards]>=0.13.0",
-    "urllib3>=2.7.0",
+    "urllib3>=2.8.0",
 ]
 
 [tool.uv.sources]
